@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Shopify Webhook Integration
 
-## Getting Started
+## Project Setup
 
-First, run the development server:
+### Next.js Application
+- Set up a Next.js application deployed on Vercel.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Tailwind CSS
+- Integrate Tailwind CSS for styling to create a modern, responsive UI.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Shopify Webhook Configuration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Create Webhook
+1. In Shopify admin, navigate to **Settings** -> **Notifications** -> **Webhooks**.
+2. Create a new webhook for the "Order creation" event pointing to your Next.js API endpoint (`https://your-vercel-domain/api/webhooks`).
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Next.js API Route
 
-## Learn More
+### Webhook Handler
+- Create an API route in Next.js (`app/api/webhooks/route.ts`) to handle incoming webhooks. This route:
+  - Verifies the HMAC signature.
+  - Processes the order data.
+  - Stores the order data in an in-memory array.
 
-To learn more about Next.js, take a look at the following resources:
+## Data Fetching and Display
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Fetch Orders
+- On the Next.js homepage (`pages/index.tsx`), fetch the stored order data from the API.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Display Orders
+- Use Tailwind CSS to create an attractive, responsive UI that displays the order details.
 
-## Deploy on Vercel
+## Testing and Verification
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Send Test Webhook
+- Use the Shopify admin to send a test webhook to your Next.js API endpoint.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Verify Data Display
+- Ensure the order details appear on the Next.js homepage, confirming that the webhook was successfully processed and the data was correctly fetched and displayed.
+
+---
+
+This README provides a clear and structured overview of the project flow, making it easy for others to understand the setup and functionality of your Next.js application integrated with Shopify webhooks.
