@@ -1,3 +1,4 @@
+// app/page.tsx
 "use client";
 import { useEffect, useState } from 'react';
 
@@ -17,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchOrders() {
-      const response = await fetch('/api/webhooks');
+      const response = await fetch('/api/orders');
       const data: Order[] = await response.json();
       setOrders(data);
     }

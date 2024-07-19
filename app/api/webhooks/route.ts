@@ -1,6 +1,7 @@
 // app/api/webhooks/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
+import nodemailer from 'nodemailer';
 import { Order } from '../../../lib/types';
 
 const SHOPIFY_SECRET = 'e975f20f5d42dbbabd0ecf273d62480f0e0f339e4459964b444f82331ac565bb';
@@ -17,6 +18,31 @@ function verifyHmac(header: string, body: string) {
 
 // Simple in-memory store
 let orderData: Order[] = [];
+
+// Set up Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // e.g., use Gmail service
+  auth: {
+    user: 'your-email@gmail.com',
+    pass: 'your-email-password'
+  }
+});
+
+async function sendCompletionEmail(email: string) {
+  const mailOptions = {
+    from: 'your-email@gmail.com',
+    to: email,
+    subject: 'Order Completed - Please Give Your Review',
+    text: 'Your order has been completed. Please give your review on this link: [review link]'
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log(`Email sent to ${email}`);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,6 +67,11 @@ export async function POST(request: NextRequest) {
     orderData.push(order);
 
     console.log('Order received and stored:', order);
+
+    // Check if the order status is completed
+    if (order.status === 'completed') {
+      await sendCompletionEmail(order.customer.email);
+    }
 
     return NextResponse.json({ message: 'Webhook received' }, { status: 200 });
   } catch (error) {
