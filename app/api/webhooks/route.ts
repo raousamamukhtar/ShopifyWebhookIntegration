@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { Order } from '../../../lib/types';
 
-const SHOPIFY_SECRET = 'e975f20f5d42dbbabd0ecf273d62480f0e0f339e4459964b444f82331ac565bb';
+const SHOPIFY_SECRET = ' 6e76893ddb281d0b4c6a8a30e318c244e412cdf6ab1abfbf67fb2a8ebf026059';
 
 function verifyHmac(header: string, body: string) {
   const digest = crypto
@@ -23,9 +23,9 @@ let orderData: Order[] = [];
 const transporter = nodemailer.createTransport({
   service: 'gmail', // e.g., use Gmail service
   auth: {
-    user: 'your-email@gmail.com',
-    pass: 'your-email-password'
-  }
+    user: process.env.username,
+    pass: process.env.password,
+    }
 });
 
 async function sendCompletionEmail(email: string) {
