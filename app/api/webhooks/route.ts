@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { Order } from '../../../lib/types';
 
-const SHOPIFY_SECRET = 'e975f20f5d42dbbabd0ecf273d62480f0e0f339e4459964b444f82331ac565bb';
+const SHOPIFY_SECRET = '6e76893ddb281d0b4c6a8a30e318c244e412cdf6ab1abfbf67fb2a8ebf026059';
 
 function verifyHmac(header: string, body: string) {
   const digest = crypto
