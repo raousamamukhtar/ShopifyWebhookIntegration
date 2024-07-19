@@ -1,11 +1,9 @@
-// app/page.tsx
 "use client";
 import { useEffect, useState } from 'react';
 
 interface Customer {
   first_name: string;
   last_name: string;
-  email: string; // Add email property
 }
 
 interface Order {
@@ -19,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchOrders() {
-      const response = await fetch('/api/orders');
+      const response = await fetch('/api/webhooks');
       const data: Order[] = await response.json();
       setOrders(data);
     }
